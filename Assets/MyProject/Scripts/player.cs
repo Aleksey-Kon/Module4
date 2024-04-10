@@ -12,14 +12,29 @@ public class Player : MonoBehaviour
     {
         _camera = Camera.main;
     }
+    public void VoidSetSpeedX(int a)
+    {
+        _input = new Vector3(a, 0, 0);
+    }
+    public void VoidSetSpeedY(int b)
+    {
+        _input = new Vector3(0, 0, b);
+    }
+    public void Jump(int a)
+    {
+        _speed = a;
+    }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift)) _speed = 6;
-        else _speed = 3;
-        var horizontal = Input.GetAxis("Horizontal");
-        var vertical = Input.GetAxis("Vertical");
-        _input = new Vector3(horizontal, 0, vertical);
-
+        
+        if(Application.platform != RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.LeftShift)) _speed = 6;
+            else _speed = 3;
+            var horizontal = Input.GetAxis("Horizontal");
+            var vertical = Input.GetAxis("Vertical");
+            _input = new Vector3(horizontal, 0, vertical);
+        }
         Vector3 movementVector = _camera.transform.TransformDirection(_input);
         //_camera.transform.RotateAround()
         movementVector.y = 0;
