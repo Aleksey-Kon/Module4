@@ -21,15 +21,20 @@ public class attack : MonoBehaviour
         {
             _attackTime -= Time.deltaTime;
         }
-
-        if (Input.GetMouseButtonDown(0) && CanAttack)
+        if (gameObject.tag == "Player" && Input.GetMouseButtonDown(0) && CanAttack)
         {
-            _animator.SetTrigger("Attack");
-            ResetAttackTimer();
-            AttackNearEnemies();
+         
+                SetAttack();
+         
         }
-    }
 
+    }
+    public void SetAttack()
+    {
+        _animator.SetTrigger("Attack");
+        ResetAttackTimer();
+        AttackNearEnemies();
+    }
     private void AttackNearEnemies()
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position, _radius, _hits, _damageMask);

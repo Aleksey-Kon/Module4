@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class Player : MonoBehaviour, IDamageble
 {
     #region variables
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Animator _animator;
     [SerializeField] private float _speed;
+    [SerializeField] private Slider _slider;
 
     [SerializeField] private int _maxHealth = 100;
     private Vector3 _input;
@@ -41,10 +44,10 @@ public class Player : MonoBehaviour, IDamageble
     #endregion
     private void OnTakeDmg(object sender, int damage)
     {
-        if (sender is not attack)
-            return;
+        //if (sender is not attack)
+          //  return;
 
-        print("удар");
+        print("удар по персонажу");
         if (_health > damage)
             _health -= damage;
         else if (_alive)
@@ -58,9 +61,12 @@ public class Player : MonoBehaviour, IDamageble
     {
         print("Dead");
         _animator.SetBool("Death",true);
+        SceneManager.LoadScene(0);
     }
     private void Update()
     {
+        _slider.value = (float)_health / 100;
+        print(_health);
         if (Input.GetKey(KeyCode.LeftShift)) _speed = 6;
         else _speed = 3;
         var horizontal = Input.GetAxis("Horizontal");
