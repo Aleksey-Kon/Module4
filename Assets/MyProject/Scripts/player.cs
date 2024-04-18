@@ -1,17 +1,30 @@
+using System;
 using UnityEngine;
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageble
 {
+    #region variables
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Animator _animator;
     [SerializeField] private float _speed;
 
+    [SerializeField] private int _maxHealth = 100;
     private Vector3 _input;
     private Camera _camera;
+    private int _health;
+    private bool _alive = true;
 
+    public int Health => _health;
+
+    public EventHandler<int> TakeDamage => OnTakeDmg;
+    #endregion
     private void Start()
     {
+        _health = _maxHealth;
+        _alive = _health > 0;
         _camera = Camera.main;
     }
+    #region old
+    /*
     public void VoidSetSpeedX(int a)
     {
         _input = new Vector3(a, 0, 0);
@@ -24,19 +37,36 @@ public class Player : MonoBehaviour
     {
         _speed = a;
     }
+    */
+    #endregion
+    private void OnTakeDmg(object sender, int damage)
+    {
+        if (sender is not attack)
+            return;
+
+        print("удар");
+        if (_health > damage)
+            _health -= damage;
+        else if (_alive)
+        {
+            _alive = false;
+            _health = 0;
+            Die();
+        }
+    }
+    private void Die()
+    {
+        print("Dead");
+        _animator.SetBool("Death",true);
+    }
     private void Update()
     {
-        
-        if(Application.platform != RuntimePlatform.Android)
-        {
-            if (Input.GetKey(KeyCode.LeftShift)) _speed = 6;
-            else _speed = 3;
-            var horizontal = Input.GetAxis("Horizontal");
-            var vertical = Input.GetAxis("Vertical");
-            _input = new Vector3(horizontal, 0, vertical);
-        }
+        if (Input.GetKey(KeyCode.LeftShift)) _speed = 6;
+        else _speed = 3;
+        var horizontal = Input.GetAxis("Horizontal");
+        var vertical = Input.GetAxis("Vertical");
+        _input = new Vector3(horizontal, 0, vertical);
         Vector3 movementVector = _camera.transform.TransformDirection(_input);
-        //_camera.transform.RotateAround()
         movementVector.y = 0;
         movementVector.Normalize();
         transform.forward = movementVector;
