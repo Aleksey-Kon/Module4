@@ -46,7 +46,7 @@ public class Player : MonoBehaviour, IDamageble
     {
         //if (sender is not attack)
           //  return;
-
+        _animator.SetTrigger("Damage");
         print("удар по персонажу");
         if (_health > damage)
             _health -= damage;

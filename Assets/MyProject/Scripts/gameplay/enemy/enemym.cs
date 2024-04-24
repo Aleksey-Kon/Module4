@@ -5,8 +5,10 @@ using UnityEngine.AI;
 public class enemym : Enemy
 {
     [SerializeField] private float _maxSpeed = 5f;
+    [SerializeField] private float _minSpeed;
     [SerializeField] private float _speedIncrase = 1f;
 
+    [SerializeField] private charprogress _progress;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Animator _animator;
     [SerializeField] private NavMeshAgent _agent;
@@ -20,7 +22,11 @@ public class enemym : Enemy
 
     private void Awake()
     {
+        _minSpeed = _progress._charinfo[_progress.Level].MinSpeed;
+        _maxHealth = _progress._charinfo[_progress.Level].MaxHp;
         _health = _maxHealth;
+        _maxSpeed = _progress._charinfo[_progress.Level].MaxSpeed;
+        _speedIncrase = _progress._charinfo[_progress.Level].SpeedInc;
     }
 
     private void Update()
@@ -39,7 +45,7 @@ public class enemym : Enemy
         }
             if (_agent.hasPath && _currentSpeed < _maxSpeed)
             {
-                _currentSpeed += _speedIncrase * Time.deltaTime;
+                _currentSpeed += _minSpeed * _speedIncrase * Time.deltaTime;
             }
           
             if (!_agent.hasPath)
