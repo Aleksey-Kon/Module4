@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDamageble
     [SerializeField] private Animator _animator;
     [SerializeField] private float _speed;
     [SerializeField] private Slider _slider;
+    [SerializeField] private charprogress _progress;
 
     [SerializeField] private int _maxHealth = 100;
     private Vector3 _input;
@@ -22,9 +23,11 @@ public class Player : MonoBehaviour, IDamageble
     #endregion
     private void Start()
     {
+        _maxHealth = _progress._charinfo[_progress.Level].MaxHp;
         _health = _maxHealth;
         _alive = _health > 0;
         _camera = Camera.main;
+
     }
     #region old
     /*
