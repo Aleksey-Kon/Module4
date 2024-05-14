@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,13 +11,28 @@ public class Player : MonoBehaviour, IDamageble
     [SerializeField] private float _speed;
     [SerializeField] private Slider _slider;
     [SerializeField] private charprogress _progress;
+    [SerializeField] private ParticleSystem _particleSystem;
 
     [SerializeField] private int _maxHealth = 100;
     private Vector3 _input;
     private Camera _camera;
     private int _health;
     private bool _alive = true;
-
+    [SerializeField] private TMP_Text _textcoin;
+    private static int _loot;
+    private static int _coin;
+    public int Coin => _coin;
+    public static void OnCoin(int a)
+    {
+        _coin += a;
+        print(a);
+        _loot = 0;
+    }
+    public static void OnLoot(int a)
+    {
+        _loot += a;
+    }
+    public static int Loot => _loot;
     public int Health => _health;
 
     public EventHandler<int> TakeDamage => OnTakeDmg;
@@ -47,6 +63,7 @@ public class Player : MonoBehaviour, IDamageble
     #endregion
     private void OnTakeDmg(object sender, int damage)
     {
+        _particleSystem.Play();
         //if (sender is not attack)
           //  return;
         _animator.SetTrigger("Damage");
@@ -69,6 +86,7 @@ public class Player : MonoBehaviour, IDamageble
     private void Update()
     {
         _slider.value = (float)_health / 100;
+        _textcoin.text = $"Coin:{Coin}";
         print(_health);
         if (Input.GetKey(KeyCode.LeftShift)) _speed = 6;
         else _speed = 3;
