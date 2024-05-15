@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3612472755768664886}
   - component: {fileID: 5126188191955263586}
   m_Layer: 0
-  m_Name: Bottle_01
+  m_Name: Bottle_02
   m_TagString: loot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,5 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2af92a86c40a314881043e7bd1577b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lootData: {fileID: 11400000, guid: 73a61fb0bc796a64fa1ec5562ce5628c, type: 2}
+  _lootData: {fileID: 11400000, guid: f978be6b8b1f0fc4abfe665978dac928, type: 2}
   _script: {fileID: 0}

@@ -4,7 +4,7 @@ using UnityEngine;
 public class trayder : MonoBehaviour
 {
     [SerializeField] private float _tradeRadius = 5f;
-    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _player,_script;
 
     private void Update()
     {
@@ -17,6 +17,7 @@ public class trayder : MonoBehaviour
         if (Player.Loot <= 0)
             return;
         Player.OnCoin(Player.Loot);
+        _script.GetComponent<inventoryslot>().removeslot();
     }
 
     private void OnDrawGizmos()
